@@ -2,5 +2,5 @@ nltk
 Flask
 numpy
 pandas
-tensorflow==2.14.0
+tensorflow
 gunicorn
