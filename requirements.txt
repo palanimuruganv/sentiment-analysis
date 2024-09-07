@@ -1,5 +1,5 @@
-Flask==2.0.3
-numpy==1.24.0
-pandas==2.0.3
+Flask
+numpy
+pandas
 tensorflow==2.14.0
-gunicorn == 20.0.4
+gunicorn
