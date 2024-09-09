@@ -83,10 +83,12 @@
 <body>
     <div class="container">
         <h1>Text Input Example</h1>
-        <form id="text-form">
-            <input type="text" id="user-input" class="input-field" placeholder="Enter text here" required>
+        <!-- Add ID to form and input fields -->
+        <form id="text-form" method="POST">
+            <input id="user-input" type="text" name="user_input" class="input-field" placeholder="Enter your text" />
             <button type="submit" class="submit-button">Submit</button>
         </form>
+        
         <div id="result" class="result"></div>
     </div>
 
@@ -98,11 +100,14 @@
             "neutral": "😐"     // Neutral face for neutral sentiment
         };
 
+        // Add event listener to the form to intercept the submit event
         document.getElementById('text-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
 
+            // Get user input
             const userInput = document.getElementById('user-input').value;
 
+            // Send user input to the server via fetch POST request
             fetch('/classify', {
                 method: 'POST',
                 headers: {
