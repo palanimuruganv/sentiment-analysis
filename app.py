@@ -60,19 +60,22 @@ def home():
 
 @app.route('/classify', methods=['POST'])
 def classify():
-    data = request.get_json()
-    input_text = data.get('text', '')
-    
-    if not input_text:
-        return jsonify({"error": "No text provided"}), 400
+    try:
+        data = request.get_json()
+        input_text = data.get('text', '')
+        
+        if not input_text:
+            return jsonify({"error": "No text provided"}), 400
 
-    # Call the prediction function
-    predicted_emotion = predict_emotion(input_text)
-    
-    return jsonify({
-        "input_text": input_text,
-        "predicted_emotion": predicted_emotion
-    })
+        predicted_emotion = predict_emotion(input_text)
+        
+        return jsonify({
+            "input_text": input_text,
+            "predicted_emotion": predicted_emotion
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route('/input', methods=['GET', 'POST'])
 def index():
