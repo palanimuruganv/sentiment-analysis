@@ -115,18 +115,15 @@
                 },
                 body: JSON.stringify({ text: userInput })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.error) });
+                }
+                return response.json();
+            })
             .then(data => {
-                // Log the predicted emotion to debug
-                console.log('Predicted Emotion:', data.predicted_emotion);
-
-                // Get the predicted emotion
-                const emotion = data.predicted_emotion.toLowerCase(); // Ensure the emotion is in lowercase
-                
-                // Get the corresponding emoji
-                const emoji = emotionToEmoji[emotion] || "🤔"; // Default to thinking emoji if emotion not found
-
-                // Display the result
+                const emotion = data.predicted_emotion.toLowerCase();
+                const emoji = emotionToEmoji[emotion] || "🤔";
                 document.getElementById('result').innerHTML = `
                     <h2>Predicted Emotion:</h2>
                     <p class="emoji">${emoji}</p>
@@ -134,8 +131,9 @@
                 `;
             })
             .catch(error => {
-                console.error('Error:', error);
+                document.getElementById('result').innerHTML = `<p>Error: ${error.message}</p>`;
             });
+            
         });
     </script>
 </body>
